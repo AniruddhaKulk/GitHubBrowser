@@ -25,14 +25,17 @@ ext.versions = [
         "compileSDK": 29,
         "minSDK": 21,
         "targetSDK": 29,
-        "dagger": "2.28.3"
+        "dagger": "2.28.3",
+        "truth": "1.0.1"
 ]
 
 ext.deps = [
         "dagger": [
                 "core": "com.google.dagger:dagger:${versions.dagger}",
                 "compiler": "com.google.dagger:dagger-compiler:${versions.dagger}"
-        ]
+        ],
+        "truth": "com.google.truth:truth:${versions.truth}"
+
 ]
 
 
