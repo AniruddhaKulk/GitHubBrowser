@@ -1,2 +1,4 @@
+include ':repository'
 include ':app'
+include ':githubapi'
 rootProject.name = "DaggerGitHub"
