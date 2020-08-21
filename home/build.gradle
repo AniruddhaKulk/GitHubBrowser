@@ -34,6 +34,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
 
     implementation deps.androidx.recyclerview
+    implementation deps.androidx.constraintLayout
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
