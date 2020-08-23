@@ -3,10 +3,12 @@ package com.anikulki.daggergithub.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.anikulki.daggergithub.di.scope.HomeScope
 import com.anikulki.daggergithub.home.list.RepositoryItem
 import com.anikulki.daggergithub.repository.AppRepository
 import javax.inject.Inject
 
+@HomeScope
 class HomeViewModel @Inject constructor(
     private val appRepository: AppRepository
 ): ViewModel(){
