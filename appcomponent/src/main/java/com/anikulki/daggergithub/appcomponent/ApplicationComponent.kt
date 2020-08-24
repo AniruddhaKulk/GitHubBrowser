@@ -1,9 +1,8 @@
-package com.anikulki.daggergithub.application
+package com.anikulki.daggergithub.appcomponent
 
 import android.content.Context
 import com.anikulki.daggergithub.appdeps.ApplicationDeps
 import com.anikulki.daggergithub.githubapi.GitHubApiModule
-import com.anikulki.daggergithub.repository.AppRepository
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton

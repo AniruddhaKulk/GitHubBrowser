@@ -1,4 +1,4 @@
-package com.anikulki.daggergithub.home
+package com.anikulki.daggergithub.testing.app
 
 import org.junit.Test
 

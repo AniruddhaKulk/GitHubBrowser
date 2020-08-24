@@ -1,6 +1,7 @@
 package com.anikulki.daggergithub.application
 
 import android.app.Application
+import com.anikulki.daggergithub.appcomponent.DaggerApplicationComponent
 import com.anikulki.daggergithub.appdeps.ApplicationDeps
 import com.anikulki.daggergithub.appdeps.HasApplicationDeps
 
