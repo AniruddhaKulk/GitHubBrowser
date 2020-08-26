@@ -51,9 +51,12 @@ dependencies {
     implementation deps.androidx.livedata
     implementation deps.dagger.core
     kapt deps.dagger.compiler
+    implementation deps.coroutines.android
 
     testImplementation deps.androidx.archtesting
     testImplementation deps.truth
+    testImplementation deps.coroutines.test
+    testImplementation project(":testing:app")
     androidTestImplementation deps.androidx.fragmenttesting
     androidTestImplementation project(":testing:app")
     testImplementation 'junit:junit:4.12'

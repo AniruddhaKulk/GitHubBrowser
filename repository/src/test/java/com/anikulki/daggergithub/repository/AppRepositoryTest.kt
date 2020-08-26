@@ -1,9 +1,10 @@
 package com.anikulki.daggergithub.repository
 
-import com.anikulki.daggergithub.githubapi.GitHubApi
 import com.anikulki.daggergithub.githubapi.model.RepoApiModel
 import com.anikulki.daggergithub.githubapi.model.UserApiModel
+import com.anikulki.daggergithub.testing.app.githubapi.FakeGitHubApi
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 
@@ -25,23 +26,16 @@ class AppRepositoryTest {
 
     @Before
     fun setup(){
-        appRepository = AppRepository(FakeGitHubApi())
+        appRepository = AppRepository(FakeGitHubApi().apply { repos = listOf(fakeRepoApiModel) })
     }
 
     @Test
     fun successfulQuery(){
-        val topRepos = appRepository.getTopRepositories()
+        val topRepos = runBlocking {
+            appRepository.getTopRepositories()
+        }
 
         assertThat(topRepos.size).isEqualTo(1)
         assertThat(topRepos[0]).isEqualTo(fakeRepoApiModel)
     }
-}
-
-
-private class FakeGitHubApi: GitHubApi {
-
-    override fun getTopRepositories(): List<RepoApiModel> {
-        return listOf(fakeRepoApiModel)
-    }
-
 }
