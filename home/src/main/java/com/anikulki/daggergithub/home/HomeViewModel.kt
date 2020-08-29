@@ -20,7 +20,7 @@ class HomeViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val topRepos = appRepository.getTopRepositories()
+            val topRepos = appRepository.getTopRepos()
             _viewState.value = HomeViewStateLoaded(
                 list = topRepos.map {
                     RepositoryItem(

@@ -12,7 +12,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.anikulki.daggergithub.testing.app.GitHubBrowserTestRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
 
@@ -55,6 +55,10 @@ dependencies {
     testImplementation deps.coroutines.test
     testImplementation deps.truth
     testImplementation project(":testing:app")
+
+
+    androidTestImplementation deps.androidx.fragmenttesting
+    androidTestImplementation project(":testing:app")
 
     implementation 'androidx.core:core-ktx:1.3.1'
     implementation 'androidx.appcompat:appcompat:1.2.0'
