@@ -43,7 +43,7 @@ class HomeViewModelTest {
     fun setUp() {
         //Unit tests do not have loopers, hence add the below line
         Dispatchers.setMain(Dispatchers.Unconfined)
-        val appRepo = AppRepository(FakeGitHubApi().apply { repos = listOf(fakeRepoApiModel) })
+        val appRepo = AppRepository(FakeGitHubApi().apply { topRepos = listOf(fakeRepoApiModel) })
         viewStateValues = mutableListOf()
 
         viewModel = HomeViewModel(appRepo)
