@@ -5,6 +5,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.anikulki.daggergithub.appcomponent.DaggerApplicationComponent
 import com.anikulki.daggergithub.appdeps.ApplicationDeps
 import com.anikulki.daggergithub.appdeps.HasApplicationDeps
+import com.anikulki.daggergithub.navigation.NAVIGATION_DEPS_SERVICE
 
 class TestApplication: Application(), HasApplicationDeps{
 
@@ -24,6 +25,14 @@ class TestApplication: Application(), HasApplicationDeps{
 
     override fun getApplicationDeps(): ApplicationDeps {
         return component
+    }
+
+    override fun getSystemService(name: String): Any? {
+        if (name == NAVIGATION_DEPS_SERVICE) {
+            return component;
+        }
+
+        return super.getSystemService(name)
     }
 
 }
