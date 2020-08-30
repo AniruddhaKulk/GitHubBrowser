@@ -6,13 +6,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.anikulki.daggergithub.di.scope.HomeScope
 import com.anikulki.daggergithub.home.list.RepositoryItem
+import com.anikulki.daggergithub.navigation.DetailsScreen
+import com.anikulki.daggergithub.navigation.ScreenNavigator
 import com.anikulki.daggergithub.repository.AppRepository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HomeScope
 class HomeViewModel @Inject constructor(
-    private val appRepository: AppRepository
+    private val appRepository: AppRepository,
+    private val screenNavigator: ScreenNavigator
 ): ViewModel(){
 
     private val _viewState = MutableLiveData<HomeViewState>(HomeViewStateLoading)
@@ -24,6 +27,7 @@ class HomeViewModel @Inject constructor(
             _viewState.value = HomeViewStateLoaded(
                 list = topRepos.map {
                     RepositoryItem(
+                        it.owner.login,
                         it.name,
                         it.description ?: "",
                         it.stargazersCount,
@@ -32,6 +36,10 @@ class HomeViewModel @Inject constructor(
                 }
             )
         }
+    }
+
+    fun onRepoSelected(repoOwner: String, repoName: String) {
+        screenNavigator.goToScreen(DetailsScreen(repoOwner, repoName))
     }
 
 }

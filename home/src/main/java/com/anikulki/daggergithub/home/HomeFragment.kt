@@ -37,7 +37,7 @@ class HomeFragment: Fragment() {
         val binding = HomeFragmentBinding.inflate(inflater, container, false)
 
         binding.rvRepoList.apply {
-            adapter = HomeRepoAdapter()
+            adapter = HomeRepoAdapter(homeViewModel::onRepoSelected)
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(
                 DividerItemDecoration(

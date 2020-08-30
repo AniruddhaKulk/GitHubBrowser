@@ -5,7 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.anikulki.daggergithub.home.databinding.ItemRepositoriesBinding
 
-class HomeRepoAdapter: RecyclerView.Adapter<HomeRepoAdapter.RepoHolder>(){
+class HomeRepoAdapter(
+    private val onRepoSelected: (repoOwner: String, repoName: String) -> Unit
+): RecyclerView.Adapter<HomeRepoAdapter.RepoHolder>(){
 
     private val repoList: MutableList<RepositoryItem> = mutableListOf()
 
@@ -16,7 +18,7 @@ class HomeRepoAdapter: RecyclerView.Adapter<HomeRepoAdapter.RepoHolder>(){
             false
         )
 
-        return RepoHolder(binding)
+        return RepoHolder(binding, onRepoSelected)
     }
 
     override fun getItemCount(): Int {
@@ -27,10 +29,20 @@ class HomeRepoAdapter: RecyclerView.Adapter<HomeRepoAdapter.RepoHolder>(){
         holder.bind(repoList[position])
     }
 
-    class RepoHolder(private val binding: ItemRepositoriesBinding)
+    class RepoHolder(private val binding: ItemRepositoriesBinding,
+                     onRepoSelected: (repoOwner: String, repoName: String) -> Unit)
         :RecyclerView.ViewHolder(binding.root)  {
 
+        private var repoItem: RepositoryItem? = null
+
+        init {
+            itemView.setOnClickListener {
+                repoItem?.let { repo -> onRepoSelected(repo.ownerName, repo.name) }
+            }
+        }
+
         fun bind(item: RepositoryItem){
+            repoItem = item
             binding.tvRepoName.text = item.name
             binding.tvRepoDescription.text = item.description
             binding.tvStarCount.text = "${item.starCount}"

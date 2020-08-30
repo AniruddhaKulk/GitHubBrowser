@@ -4,8 +4,10 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.anikulki.daggergithub.githubapi.model.RepoApiModel
 import com.anikulki.daggergithub.githubapi.model.UserApiModel
 import com.anikulki.daggergithub.home.list.RepositoryItem
+import com.anikulki.daggergithub.navigation.DetailsScreen
 import com.anikulki.daggergithub.repository.AppRepository
 import com.anikulki.daggergithub.testing.app.githubapi.FakeGitHubApi
+import com.anikulki.daggergithub.testing.app.navigation.FakeScreenNavigator
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.invoke
@@ -38,6 +40,7 @@ class HomeViewModelTest {
 
     private lateinit var viewModel: HomeViewModel
     private lateinit var viewStateValues: MutableList<HomeViewState>
+    private lateinit var screenNavigator: FakeScreenNavigator
 
     @Before
     fun setUp() {
@@ -45,8 +48,9 @@ class HomeViewModelTest {
         Dispatchers.setMain(Dispatchers.Unconfined)
         val appRepo = AppRepository(FakeGitHubApi().apply { topRepos = listOf(fakeRepoApiModel) })
         viewStateValues = mutableListOf()
+        screenNavigator = FakeScreenNavigator()
 
-        viewModel = HomeViewModel(appRepo)
+        viewModel = HomeViewModel(appRepo, screenNavigator)
         viewModel.viewStateUpdate.observeForever{viewStateValues.add(it)}
     }
 
@@ -56,6 +60,7 @@ class HomeViewModelTest {
         val expectedState = HomeViewStateLoaded(
             listOf(
                 RepositoryItem(
+                    ownerName = fakeRepoApiModel.owner.login,
                     name = fakeRepoApiModel.name,
                     description = fakeRepoApiModel.description ?: "",
                     starCount = fakeRepoApiModel.stargazersCount,
@@ -65,6 +70,17 @@ class HomeViewModelTest {
         )
 
         assertThat(viewStateValues[0]).isEqualTo(expectedState)
+    }
+
+
+    @Test
+    fun `repoSelected calls goToScreen`() {
+        viewModel.onRepoSelected(fakeRepoApiModel.owner.login, fakeRepoApiModel.name)
+
+        val expectedScreen = DetailsScreen(fakeRepoApiModel.owner.login, fakeRepoApiModel.name)
+
+        assertThat(screenNavigator.openedScreens.size).isEqualTo(1)
+        assertThat(screenNavigator.openedScreens[0]).isEqualTo(expectedScreen)
     }
 
 }
